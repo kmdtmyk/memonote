@@ -47,7 +47,7 @@ function main(){
     }
   })
 
-  io.socket.get('/user', function(users){
+  io.socket.get('/api/user', function(users){
     console.log('get', users)
     vue.users = users
   })
@@ -62,7 +62,7 @@ function main(){
     },
     methods: {
       add: function(e){
-        io.socket.post('/user', this.newUser, (res) => {
+        io.socket.post('/api/user', this.newUser, (res) => {
           console.log('post', res)
           this.users.push(res)
         })
@@ -70,7 +70,7 @@ function main(){
       },
       del: function(user){
         var id = user.id
-        io.socket.delete('/user/' + id, (res) => {
+        io.socket.delete('/api/user/' + id, (res) => {
           console.log('delete', res)
           this.users = this.users.filter((user) => user.id !== id)
         })
