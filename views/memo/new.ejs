@@ -1,12 +1,22 @@
 <h1>new memo</h1>
 
 <form action='/memo/create' method='post'>
+
   <div>
     <label>title</label>
     <input type='text' name='memo[title]'>
   </div>
+
+  <div>
+    <label>note</label>
+    <textarea name='memo[note]'></textarea>
+  </div>
+
   <button type='submit'>submit</button>
+
 </form>
+
+<hr>
 
 <div>
   <a href='/memo'>list</a>
