@@ -35,7 +35,9 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
+  'get /memo/new': 'MemoController.new',
   'get /memo/:id': 'MemoController.show',
+  'post /memo/': 'MemoController.create',
 
   /***************************************************************************
   *                                                                          *
