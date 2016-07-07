@@ -11,4 +11,10 @@ module.exports = {
       res.view({memos})
     })
   },
+  show(req, res){
+    var id = req.param('id')
+    Memo.findOne(id).exec((err, memo) => {
+      res.view({memo})
+    })
+  },
 };
