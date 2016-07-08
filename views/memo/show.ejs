@@ -1,4 +1,4 @@
-<div class='ui container'>
+<div class='ui main container'>
 
   <div id='app' v-cloak>
 
@@ -50,7 +50,7 @@
         <div class='metadata'>
           <span class="date">{{comment.createdAt}}</span>
         </div>
-        <div class='text'>
+        <div class='ui segment'>
           {{comment.body}}
         </div>
         <div class='actions'>
@@ -109,6 +109,9 @@ function main(){
 
       },
       save(){
+        if(!this.editing){
+          return
+        }
         io.socket.put('/api/memo/' + this.memo.id, this.editMemo, (memo) => {
           Object.assign(this.memo, this.editMemo)
           this.editing = false
@@ -147,7 +150,6 @@ function main(){
       vue.memo = memo
     })
   }
-
 
 }
 
