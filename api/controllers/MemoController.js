@@ -16,9 +16,12 @@ module.exports = {
   },
   show(req, res){
     var id = req.param('id')
-    Memo.findOne(id).exec((err, memo) => {
-      res.view({memo})
-    })
+    Memo
+      .findOne(id)
+      .populate('comments')
+      .exec((err, memo) => {
+        res.view({memo})
+      })
   },
   create(req, res){
     var memo = req.body.memo

@@ -1,7 +1,35 @@
-<h1><%= memo.title %></h1>
+<div id='app'>
 
-<div>
-  <%= memo.note %>
+  <h1>{{memo.title}}</h1>
+
+  <div>
+    {{memo.note}}
+  </div>
+
+  <div>
+    <div v-for='comment in memo.comments'>
+      <div>
+        [{{comment.user.name}}] {{comment.body}}
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <form v-on:submit.prevent='addComment'>
+      <div>
+        氏名: <input type='text' v-model='newComment.user.name'>
+      </div>
+      <div>
+        コメント: <textarea v-model='newComment.body'></textarea>
+      </div>
+      <button type='submit'>submit</button>
+    </form>
+  </div>
+
+  <pre>{{newComment|json}}</pre>
+
 </div>
 
 <hr>
@@ -9,3 +37,41 @@
 <div>
   <a href='/memo'>list</a>
 </div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js'></script>
+<script>
+(function(){
+
+window.addEventListener('DOMContentLoaded', function(){
+  main()
+})
+
+function main(){
+
+  var memo = <%- JSON.stringify(memo) %>
+
+  var vue = new Vue({
+    el: '#app',
+    data: {
+      memo: memo,
+      newComment: {},
+    },
+    methods: {
+      addComment: function(e){
+        this.newComment.memo = memo.id
+        io.socket.post('/api/memoComment', this.newComment, (res) => {
+          this.memo.comments.push(res)
+        })
+        this.newComment = {}
+      }
+    }
+  })
+
+  io.socket.on('memoComment', function(res){
+    console.log('on', res)
+  })
+
+}
+
+})()
+</script>
