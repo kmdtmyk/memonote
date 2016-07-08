@@ -1,6 +1,6 @@
 <div id='app'>
 
-  <h1>{{memo.title}}</h1>
+  <h1>#{{memo.id}} {{memo.title}}</h1>
 
   <div>
     {{memo.note}}
@@ -10,6 +10,7 @@
     <div v-for='comment in memo.comments'>
       <div>
         [{{comment.user.name}}] {{comment.body}}
+        <button v-on:click='deleteComment(comment)'>delete</button>
       </div>
     </div>
   </div>
@@ -27,8 +28,6 @@
       <button type='submit'>submit</button>
     </form>
   </div>
-
-  <pre>{{newComment|json}}</pre>
 
 </div>
 
@@ -57,19 +56,37 @@ function main(){
       newComment: {},
     },
     methods: {
-      addComment: function(e){
+      addComment(e){
         this.newComment.memo = memo.id
         io.socket.post('/api/memoComment', this.newComment, (res) => {
           this.memo.comments.push(res)
         })
         this.newComment = {}
+      },
+      deleteComment(comment){
+        var id = comment.id
+        io.socket.delete('/api/memoComment/' + id, (res) => {
+          console.log('delete', res)
+          this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
+        })
       }
     }
   })
 
-  io.socket.on('memoComment', function(res){
+  io.socket.on('memo', (res) => {
     console.log('on', res)
+    fetch(vue, memo.id)
   })
+
+  fetch(vue, memo.id)
+
+  function fetch(vue, id){
+    io.socket.get('/api/memo/' + id , (memo) => {
+      console.log('get', memo)
+      vue.memo = memo
+    })
+  }
+
 
 }
 
