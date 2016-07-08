@@ -26,19 +26,20 @@
       </div>
     </div>
 
-    <hr>
+    <form class='ui form reply' v-on:submit.prevent='addComment'>
+      <div class='field'>
+        <label>name</label>
+        <input type='text' v-model='newComment.user.name'>
+      </div>
+      <div class='field'>
+        <label>comment</label>
+        <textarea v-model='newComment.body'></textarea>
+      </div>
+      <button class='ui blue labeled submit icon button' type='submit'>
+        <i class='icon edit'></i> Add Comment
+      </button>
 
-    <div>
-      <form v-on:submit.prevent='addComment'>
-        <div>
-          氏名: <input type='text' v-model='newComment.user.name'>
-        </div>
-        <div>
-          コメント: <textarea v-model='newComment.body'></textarea>
-        </div>
-        <button type='submit'>submit</button>
-      </form>
-    </div>
+    </form>
 
   </div>
 
