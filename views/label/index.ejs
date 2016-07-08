@@ -2,11 +2,8 @@
 
   <div id='app' v-cloak>
 
-
-
     <div class='ui form'>
       <div class='inline fields'>
-        <!-- <span class='ui tag label' :style='newLabel.style'>{{newLabel.name}}</span> -->
         <div class='field'>
           <label>name</label>
           <input type='text' v-model='newLabel.name'>
@@ -38,7 +35,7 @@
           </td>
           <td class='right aligned'>
             <button class='ui button primary'>edit</button>
-            <button class='ui button negative'>delete</button>
+            <button class='ui button negative' v-on:click='delete(label)'>delete</button>
           </td>
         </tr>
       </tbody>
@@ -68,10 +65,15 @@ function main(){
       add(){
         io.socket.post('/api/label', this.newLabel, (res) => {
           console.log('post', res)
-          this.labels.push(res)
-          this.newLabel = {}
+          fetch()
         })
       },
+      delete(label){
+        io.socket.delete(`/api/label/${label.id}`, (res) => {
+          console.log('delete', res)
+          fetch()
+        })
+      }
     },
   })
 
