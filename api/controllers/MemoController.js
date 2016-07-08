@@ -7,9 +7,12 @@
 
 module.exports = {
   index(req, res){
-    Memo.find().exec((err, memos) => {
-      res.view({memos})
-    })
+    Memo
+      .find()
+      .populate('comments')
+      .exec((err, memos) => {
+        res.view({memos})
+      })
   },
   new(req, res){
     res.view()
