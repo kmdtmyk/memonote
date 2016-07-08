@@ -1,15 +1,48 @@
 <div class='ui container'>
 
-  <div id='app'>
+  <div id='app' v-cloak>
 
-    <h1>#{{memo.id}} {{memo.title}}</h1>
+    <h1>
+      #{{memo.id}} {{memo.title}}
+    </h1>
 
-    <div>
-      {{memo.note}}
+    <div class='ui form' v-if='editing'>
+
+      <div class='field'>
+        <label>title</label>
+        <input type='text' v-model='editMemo.title'>
+      </div>
+
+      <div class='field'>
+        <label>note</label>
+        <textarea v-model='editMemo.note'></textarea>
+      </div>
+
+      <div class='ui buttons'>
+        <button class='ui button positive' v-on:click='save'>Save</button>
+        <div class='or'></div>
+        <button class='ui button' v-on:click='cancel'>Cancel</button>
+      </div>
+
+    </div>
+
+    <div v-else>
+
+      <div class='ui segment'>
+        {{memo.note}}
+      </div>
+
+      <div>
+        <button class='ui button primary' v-on:click='edit'>edit</button>
+        <button class='ui button negative' v-on:click='delete'>delete</button>
+      </div>
+
     </div>
 
     <div class='ui comments'>
-      <h3 class='ui dividing header'>Comments</h3>
+      <h3 class='ui dividing header'>
+        Comments ({{memo.comments.length}})
+      </h3>
       <div class='comment' v-for='comment in memo.comments'>
         <span class='author'>
           {{comment.user.name}}
@@ -38,7 +71,6 @@
       <button class='ui blue labeled submit icon button' type='submit'>
         <i class='icon edit'></i> Add Comment
       </button>
-
     </form>
 
   </div>
@@ -60,10 +92,31 @@ function main(){
   var vue = new Vue({
     el: '#app',
     data: {
+      editing: false,
       memo: memo,
       newComment: {},
+      editMemo: {},
     },
     methods: {
+      edit(){
+        this.editMemo = {
+          title: this.memo.title,
+          note: this.memo.note,
+        }
+        this.editing = true
+      },
+      delete(){
+
+      },
+      save(){
+        io.socket.put('/api/memo/' + this.memo.id, this.editMemo, (memo) => {
+          Object.assign(this.memo, this.editMemo)
+          this.editing = false
+        })
+      },
+      cancel(){
+        this.editing = false
+      },
       addComment(e){
         this.newComment.memo = memo.id
         io.socket.post('/api/memoComment', this.newComment, (res) => {
@@ -77,7 +130,7 @@ function main(){
           console.log('delete', res)
           this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
         })
-      }
+      },
     }
   })
 
