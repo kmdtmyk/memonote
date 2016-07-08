@@ -1,29 +1,33 @@
-<h1>memo list</h1>
+<div class='ui container'>
 
-<div>
+  <h1>memo list</h1>
 
   <div>
-    <a href='/memo/new'>new memo</a>
+
+    <div>
+      <a href='/memo/new'>new memo</a>
+    </div>
+
+    <form>
+      <input type='seach' placeholder='search' name='q'>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% memos.forEach((memo) => { %>
+          <tr>
+            <td>
+              <a href='/memo/<%= memo.id %>'><%= memo.title %></a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
   </div>
 
-  <form>
-    <input type='seach' placeholder='search' name='q'>
-  </form>
-
-  <table>
-    <thead>
-      <tr>
-        <th>title</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% memos.forEach((memo) => { %>
-        <tr>
-          <td>
-            <a href='/memo/<%= memo.id %>'><%= memo.title %></a>
-          </td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
 </div>

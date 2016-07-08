@@ -1,29 +1,33 @@
-<h1>user list</h1>
+<div class='ui container'>
 
-<div id='app' v-cloak>
+  <h1>user list</h1>
 
-  <form v-on:submit.prevent='add'>
-    <input type='text' v-model='newUser.name'>
-  </form>
+  <div id='app' v-cloak>
 
-  <table>
-    <thead>
-      <th>id</th>
-      <th>name</th>
-      <th>createdAt</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr v-for='user in users'>
-        <td>{{user.id}}</td>
-        <td>{{user.name}}</td>
-        <td>{{user.createdAt}}</td>
-        <td>
-          <button v-on:click='del(user)'>delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <form v-on:submit.prevent='add'>
+      <input type='text' v-model='newUser.name'>
+    </form>
+
+    <table>
+      <thead>
+        <th>id</th>
+        <th>name</th>
+        <th>createdAt</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr v-for='user in users'>
+          <td>{{user.id}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.createdAt}}</td>
+          <td>
+            <button v-on:click='del(user)'>delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 
 </div>
 
