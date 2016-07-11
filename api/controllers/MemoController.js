@@ -44,7 +44,7 @@ module.exports = {
       if(err){
         return res.send(err, 500)
       }
-      Memo.message(id, memo)
+      Memo.publishUpdate(id, memo, req)
       res.ok()
     })
   }
