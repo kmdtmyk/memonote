@@ -34,5 +34,18 @@ module.exports = {
       }
       res.redirect(`/memo/${memo.id}`)
     })
+  },
+  update(req, res){
+    var id = req.params.id
+    var memo = req.body
+    Memo
+      .update(id, memo)
+      .exec((err, memo) => {
+      if(err){
+        return res.send(err, 500)
+      }
+      Memo.message(id, memo)
+      res.ok()
+    })
   }
 };

@@ -18,6 +18,11 @@
         <textarea v-model='editMemo.note'></textarea>
       </div>
 
+      <div class='field'>
+        <label>file</label>
+        <input type='file' v-model='editMemo.file'>
+      </div>
+
       <div class='ui buttons'>
         <button class='ui button positive' v-on:click='save'>Save</button>
         <div class='or'></div>

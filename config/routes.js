@@ -38,6 +38,7 @@ module.exports.routes = {
   'get /memo/new': 'MemoController.new',
   'get /memo/:id': 'MemoController.show',
   'post /memo/': 'MemoController.create',
+  'put /memo/:id': 'MemoController.update',
 
   /***************************************************************************
   *                                                                          *
