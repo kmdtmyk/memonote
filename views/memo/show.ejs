@@ -94,13 +94,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
 function main(){
 
-  var memo = <%- JSON.stringify(memo) %>
+  var id = <%= memo.id %>
 
   var vue = new Vue({
     el: '#app',
     data: {
       editing: false,
-      memo: memo,
+      memo: {},
       newComment: {},
       editMemo: {},
       file: '',
@@ -135,7 +135,7 @@ function main(){
         this.editing = false
       },
       addComment(e){
-        this.newComment.memo = memo.id
+        this.newComment.memo = id
         io.socket.post('/api/memoComment', this.newComment, (res) => {
           this.memo.comments.push(res)
         })
@@ -173,10 +173,10 @@ function main(){
 
   io.socket.on('memo', (res) => {
     console.log('on', res)
-    fetch(vue, memo.id)
+    fetch(vue, id)
   })
 
-  fetch(vue, memo.id)
+  fetch(vue, id)
 
   function fetch(vue, id){
     io.socket.get('/api/memo/' + id , (memo) => {
