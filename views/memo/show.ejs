@@ -19,7 +19,7 @@
       </div>
 
       <div class='field'>
-        <label>file</label>
+        <label>file upload</label>
         <input type='file' v-model='file' v-on:change='upload' multiple>
       </div>
 
@@ -34,7 +34,7 @@
     <div v-else>
 
       <div class='ui segment'>
-        {{memo.note}}
+        {{{_note}}}
       </div>
 
       <div>
@@ -84,6 +84,7 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/superagent/2.0.0/superagent.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'></script>
 <script>
 (function(){
 
@@ -103,6 +104,11 @@ function main(){
       newComment: {},
       editMemo: {},
       file: '',
+    },
+    computed: {
+      _note(){
+        return marked(this.memo.note)
+      },
     },
     methods: {
       edit(){
@@ -148,7 +154,16 @@ function main(){
           console.log(res.body)
           var files = res.body.files
           files.forEach((file) => {
-            this.editMemo.note += '\n' + file.url
+            var text
+            if(isImage(file.type)){
+              text = `![${file.filename}](${file.url})`
+            }else{
+              text = `[${file.filename}](${file.url})`
+            }
+            if(this.editMemo.note){
+              this.editMemo.note += '\n'
+            }
+            this.editMemo.note += text
           })
           this.file = ''
         })
@@ -176,6 +191,10 @@ function main(){
       request.attach('file', file)
     })
     request.end(callback)
+  }
+
+  function isImage(type){
+    return type.split('/')[0] === 'image'
   }
 
 }
