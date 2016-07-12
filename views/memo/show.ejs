@@ -144,11 +144,7 @@ function main(){
       },
       upload(e){
         var files = e.target.files
-        var request = superagent.post('/multimedia/upload')
-        Array.prototype.forEach.call(files, (file) => {
-          request.attach('file', file)
-        })
-        request.end((err, res) => {
+        upload(files, (err, res) => {
           console.log(res.body)
           var files = res.body.files
           files.forEach((file) => {
@@ -172,6 +168,14 @@ function main(){
       console.log('get', memo)
       vue.memo = memo
     })
+  }
+
+  function upload(files, callback){
+    var request = superagent.post('/multimedia/upload')
+    Array.prototype.forEach.call(files, (file) => {
+      request.attach('file', file)
+    })
+    request.end(callback)
   }
 
 }
