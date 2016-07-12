@@ -9,17 +9,17 @@ module.exports = {
   upload(req, res){
     req.file('file').upload({
       maxBytes: 10000000
-    }, (err, uploadedFiles) => {
+    }, (err, files) => {
       if(err){
         return res.serverError(err)
       }
-      var fd = uploadedFiles[0].fd
-      var name = fd.split('/').pop()
-      var url = req.baseUrl + '/multimedia/' + name
-      return res.json({
-        files: uploadedFiles,
-        url: url,
+      files = files.map((file) => {
+        var fd = file.fd
+        var name = fd.split('/').pop()
+        file.url = req.baseUrl + '/multimedia/' + name
+        return file
       })
+      return res.json({files})
     })
   },
   show(req, res){

@@ -20,7 +20,7 @@
 
       <div class='field'>
         <label>file</label>
-        <input type='file' v-model='file' v-on:change='upload'>
+        <input type='file' v-model='file' v-on:change='upload' multiple>
       </div>
 
       <div class='ui buttons'>
@@ -143,16 +143,19 @@ function main(){
         })
       },
       upload(e){
-        var file = e.target.files[0]
-        superagent
-          .post('/multimedia/upload')
-          .attach('file', file)
-          .end((err, res) => {
-            console.log(res.body)
-            var url = res.body.url
-            this.editMemo.note += '\n' + url
-            this.file = ''
+        var files = e.target.files
+        var request = superagent.post('/multimedia/upload')
+        Array.prototype.forEach.call(files, (file) => {
+          request.attach('file', file)
+        })
+        request.end((err, res) => {
+          console.log(res.body)
+          var files = res.body.files
+          files.forEach((file) => {
+            this.editMemo.note += '\n' + file.url
           })
+          this.file = ''
+        })
       }
     }
   })
