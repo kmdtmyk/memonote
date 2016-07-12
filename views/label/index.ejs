@@ -65,6 +65,7 @@ function main(){
       add(){
         io.socket.post('/api/label', this.newLabel, (res) => {
           console.log('post', res)
+          this.newLabel = {}
           fetch()
         })
       },
