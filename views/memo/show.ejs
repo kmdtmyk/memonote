@@ -20,7 +20,7 @@
 
       <div class='field'>
         <label>file</label>
-        <input type='file' v-model='editMemo.file'>
+        <input type='file' v-model='file' v-on:change='upload'>
       </div>
 
       <div class='ui buttons'>
@@ -83,6 +83,7 @@
 </div>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/superagent/2.0.0/superagent.min.js'></script>
 <script>
 (function(){
 
@@ -101,6 +102,7 @@ function main(){
       memo: memo,
       newComment: {},
       editMemo: {},
+      file: '',
     },
     methods: {
       edit(){
@@ -108,6 +110,7 @@ function main(){
           title: this.memo.title,
           note: this.memo.note,
         }
+        this.file = ''
         this.editing = true
       },
       delete(){
@@ -139,6 +142,18 @@ function main(){
           this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
         })
       },
+      upload(e){
+        var file = e.target.files[0]
+        superagent
+          .post('/multimedia/upload')
+          .attach('file', file)
+          .end((err, res) => {
+            console.log(res.body)
+            var url = res.body.url
+            this.editMemo.note += '\n' + url
+            this.file = ''
+          })
+      }
     }
   })
 
