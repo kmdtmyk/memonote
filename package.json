@@ -25,7 +25,9 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "server": "node app.js",
+    "client": "webpack-dev-server -w"
   },
   "main": "app.js",
   "repository": {
@@ -33,5 +35,9 @@
     "url": "git://github.com/vagrant/memonote.git"
   },
   "author": "vagrant",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
 }
