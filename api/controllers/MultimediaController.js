@@ -16,7 +16,7 @@ module.exports = {
       files = files.map((file) => {
         var fd = file.fd
         var name = fd.split('/').pop()
-        file.url = req.baseUrl + '/multimedia/' + name
+        file.url = '/multimedia/' + name
         return file
       })
       return res.json({files})
