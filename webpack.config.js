@@ -3,9 +3,9 @@ var path = require('path')
 
 
 module.exports = {
-  context: __dirname + '/src',
+  context: __dirname,
   entry: {
-    'index': './index.js',
+    'index': './src/index.js',
   },
   output: {
     path: path.resolve(__dirname, 'client'),
@@ -30,6 +30,9 @@ module.exports = {
     ],
     extensions: ['', '.js', '.vue']
   },
+  plugins: [
+    new webpack.NoErrorsPlugin(),
+  ],
   devtool: 'eval',
   devServer: {
     host: '0.0.0.0',

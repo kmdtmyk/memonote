@@ -1,8 +1,16 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-let vue = new Vue({
-  el: '#app',
-  data: {
-    test: 'this is a test.',
-  },
+import App from './App'
+import routes from './routes'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  saveScrollPosition: true,
 })
+
+router.map(routes)
+
+const app = Vue.extend(App)
+router.start(app, '#app')
