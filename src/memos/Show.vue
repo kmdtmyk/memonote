@@ -32,7 +32,7 @@
   <div v-else>
 
     <div class='ui segment'>
-      {{{markedNote}}}
+      <markdown-viewer :text='memo.note'></markdown-viewer>
     </div>
 
     <div>
@@ -50,10 +50,10 @@
 
 <script>
 import io from '../io'
-import marked from 'marked'
 
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
+import MarkdownViewer from '../components/MarkdownViewer'
 
 export default {
   data(){
@@ -69,17 +69,10 @@ export default {
       file: '',
     }
   },
-  computed: {
-    markedNote(){
-      if(!this.memo.note){
-        return ''
-      }
-      return marked(this.memo.note)
-    },
-  },
   components: {
     CommentList,
     CommentForm,
+    MarkdownViewer,
   },
   route: {
     data({ to, next }){
