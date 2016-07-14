@@ -7,6 +7,7 @@
 
 module.exports = {
   upload(req, res){
+    console.log(res)
     req.file('file').upload({
       maxBytes: 10000000
     }, (err, files) => {
@@ -16,7 +17,7 @@ module.exports = {
       files = files.map((file) => {
         var fd = file.fd
         var name = fd.split('/').pop()
-        file.url = '/multimedia/' + name
+        file.url = req.baseUrl + '/multimedia/' + name
         return file
       })
       return res.json({files})
