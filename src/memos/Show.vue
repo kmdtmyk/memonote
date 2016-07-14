@@ -42,25 +42,7 @@
 
   </div>
 
-  <div class='ui comments'>
-    <h3 class='ui dividing header'>
-      Comments ({{memo.comments.length}})
-    </h3>
-    <div class='comment' v-for='comment in memo.comments'>
-      <span class='author'>
-        {{comment.user.name}}
-      </span>
-      <div class='metadata'>
-        <span class="date">{{comment.createdAt}}</span>
-      </div>
-      <div class='ui segment'>
-        {{comment.body}}
-      </div>
-      <div class='actions'>
-        <a href='javascript:' v-on:click='deleteComment(comment)'>delete</a>
-      </div>
-    </div>
-  </div>
+  <comment-list :comments='memo.comments'></comment-list>
 
   <form class='ui form reply' v-on:submit.prevent='addComment'>
     <div class='field'>
@@ -81,6 +63,7 @@
 <script>
 import io from '../io'
 import marked from 'marked'
+import CommentList from './CommentList'
 
 export default {
   data(){
@@ -103,6 +86,9 @@ export default {
       }
       return marked(this.memo.note)
     },
+  },
+  components: {
+    CommentList,
   },
   route: {
     data({ to, next }){
