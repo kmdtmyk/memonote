@@ -42,7 +42,7 @@
 
   </div>
 
-  <comment-list :comments='memo.comments'></comment-list>
+  <comment-list :comments='memo.comments' v-on:delete='deleteComment'></comment-list>
 
   <comment-form :comment='newComment' v-on:submit='addComment'></comment-form>
 

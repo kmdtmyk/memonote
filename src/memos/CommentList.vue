@@ -15,7 +15,7 @@
         {{comment.body}}
       </div>
       <div class='actions'>
-        <a href='javascript:' v-on:click='deleteComment(comment)'>delete</a>
+        <a href='javascript:' v-on:click='del(comment)'>delete</a>
       </div>
     </div>
   </div>
@@ -26,6 +26,11 @@
 export default {
   props: {
     comments: []
+  },
+  methods: {
+    del(comment){
+      this.$emit('delete', comment)
+    },
   },
 }
 </script>
