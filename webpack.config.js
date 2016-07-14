@@ -33,7 +33,7 @@ module.exports = {
   plugins: [
     new webpack.NoErrorsPlugin(),
   ],
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   devServer: {
     host: '0.0.0.0',
     port: 8080,
