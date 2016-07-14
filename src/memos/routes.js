@@ -1,6 +1,6 @@
 import Index from './Index'
-// import New from './New'
-// import Show from './Show'
+import New from './New'
+import Show from './Show'
 
 
 export default {
@@ -11,11 +11,11 @@ export default {
     '/': {
       component: Index,
     },
-    // '/new': {
-    //   component: New,
-    // },
-    // '/:_id': {
-    //   component: Show,
-    // },
+    '/new': {
+      component: New,
+    },
+    '/:id': {
+      component: Show,
+    },
   },
 }

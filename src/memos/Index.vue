@@ -9,7 +9,7 @@
       </div>
     </form>
     <div class='right item'>
-      <a class='ui button primary' v-link='{path: `/memo/new`}'>new memo</a>
+      <a class='ui button primary' v-link='{path: `/memos/new`}'>new memo</a>
     </div>
   </div>
 
@@ -39,11 +39,7 @@
 </template>
 
 <script>
-import socketIOClient from 'socket.io-client'
-import sailsIOClient from 'sails.io.js'
-
-var io = sailsIOClient(socketIOClient)
-io.sails.url = 'http://localhost:1337'
+import io from '../io'
 
 export default {
   data() {
@@ -54,7 +50,7 @@ export default {
   route: {
     data({ to, next }){
       io.socket.get('/api/memo', (memos) => {
-        console.log(memos)
+        // console.log(memos)
         next({memos})
       })
     },
