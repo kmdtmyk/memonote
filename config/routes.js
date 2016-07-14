@@ -39,6 +39,13 @@ module.exports.routes = {
   'get /memo/:id': 'MemoController.show',
   'post /memo/': 'MemoController.create',
   'put /memo/:id': 'MemoController.update',
+  'post /multimedia/upload': {
+    controller: 'MultimediaController',
+    action: 'upload',
+    cors: {
+      origin: 'http://localhost:8080'
+    },
+  },
   'get /multimedia/:name': 'MultimediaController.show',
 
   /***************************************************************************

@@ -18,7 +18,7 @@
 
     <div class='field'>
       <label>file upload</label>
-      <input type='file' v-model='file' v-on:change='upload' multiple>
+      <file-uploader v-on:uploaded='uploaded'></file-uploader>
     </div>
 
     <div class='ui buttons'>
@@ -54,6 +54,7 @@ import io from '../io'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 import MarkdownViewer from '../components/MarkdownViewer'
+import FileUploader from '../components/FileUploader'
 
 export default {
   data(){
@@ -66,13 +67,13 @@ export default {
       },
       editing: false,
       editMemo: {},
-      file: '',
     }
   },
   components: {
     CommentList,
     CommentForm,
     MarkdownViewer,
+    FileUploader,
   },
   route: {
     data({ to, next }){
@@ -89,7 +90,6 @@ export default {
         title: this.memo.title,
         note: this.memo.note,
       }
-      this.file = ''
       this.editing = true
     },
     delete(){
@@ -117,30 +117,25 @@ export default {
       }
     },
     deleteComment(comment){
-      var id = comment.id
+      let id = comment.id
       io.socket.delete('/api/memoComment/' + id, (res) => {
         console.log('delete', res)
         this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
       })
     },
-    upload(e){
-      var files = e.target.files
-      upload(files, (err, res) => {
-        console.log(res.body)
-        var files = res.body.files
-        files.forEach((file) => {
-          var text
-          if(isImage(file.type)){
-            text = `![${file.filename}](${file.url})`
-          }else{
-            text = `[${file.filename}](${file.url})`
-          }
-          if(this.editMemo.note){
-            this.editMemo.note += '\n'
-          }
-          this.editMemo.note += text
-        })
-        this.file = ''
+    uploaded(files){
+      // console.log(files)
+      files.forEach((file) => {
+        let text
+        if(isImage(file.type)){
+          text = `![${file.filename}](${file.url})`
+        }else{
+          text = `[${file.filename}](${file.url})`
+        }
+        if(this.editMemo.note){
+          this.editMemo.note += '\n'
+        }
+        this.editMemo.note += text
       })
     },
   }
@@ -160,13 +155,6 @@ export default {
 //   })
 // }
 
-function upload(files, callback){
-  var request = superagent.post('/multimedia/upload')
-  Array.prototype.forEach.call(files, (file) => {
-    request.attach('file', file)
-  })
-  request.end(callback)
-}
 
 function isImage(type){
   return type.split('/')[0] === 'image'
