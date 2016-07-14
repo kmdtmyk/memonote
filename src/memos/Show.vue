@@ -44,26 +44,16 @@
 
   <comment-list :comments='memo.comments'></comment-list>
 
-  <form class='ui form reply' v-on:submit.prevent='addComment'>
-    <div class='field'>
-      <label>name</label>
-      <input type='text' v-model='newComment.user.name'>
-    </div>
-    <div class='field'>
-      <label>comment</label>
-      <textarea v-model='newComment.body'></textarea>
-    </div>
-    <button class='ui blue labeled submit icon button' type='submit'>
-      <i class='icon edit'></i> Add Comment
-    </button>
-  </form>
+  <comment-form :comment='newComment' v-on:submit='addComment'></comment-form>
 
 </template>
 
 <script>
 import io from '../io'
 import marked from 'marked'
+
 import CommentList from './CommentList'
+import CommentForm from './CommentForm'
 
 export default {
   data(){
@@ -89,6 +79,7 @@ export default {
   },
   components: {
     CommentList,
+    CommentForm,
   },
   route: {
     data({ to, next }){
@@ -124,11 +115,13 @@ export default {
       this.editing = false
     },
     addComment(e){
-      this.newComment.memo = id
+      this.newComment.memo = this.memo.id
       io.socket.post('/api/memoComment', this.newComment, (res) => {
         this.memo.comments.push(res)
       })
-      this.newComment = {}
+      this.newComment = {
+        user: {},
+      }
     },
     deleteComment(comment){
       var id = comment.id

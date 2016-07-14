@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class='ui comments'>
     <h3 class='ui dividing header'>
       Comments ({{comments.length}})
