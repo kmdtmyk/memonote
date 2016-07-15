@@ -7,7 +7,7 @@
 
 module.exports = {
   upload(req, res){
-    console.log(res)
+    // console.log(res)
     req.file('file').upload({
       maxBytes: 10000000
     }, (err, files) => {
