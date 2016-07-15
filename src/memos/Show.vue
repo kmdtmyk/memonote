@@ -6,30 +6,7 @@
       #{{memo.id}} {{memo.title}}
     </h1>
 
-    <div class='ui form' v-if='editing'>
-
-      <div class='field'>
-        <label>title</label>
-        <input type='text' v-model='editMemo.title'>
-      </div>
-
-      <div class='field'>
-        <label>note</label>
-        <textarea v-model='editMemo.note'></textarea>
-      </div>
-
-      <div class='field'>
-        <label>file upload</label>
-        <file-uploader v-on:uploaded='uploaded'></file-uploader>
-      </div>
-
-      <div class='ui buttons'>
-        <button class='ui button positive' v-on:click='save'>Save</button>
-        <div class='or'></div>
-        <button class='ui button' v-on:click='cancel'>Cancel</button>
-      </div>
-
-    </div>
+    <memo-form v-if='editing' :memo='editMemo' v-on:save='save' v-on:cancel='cancel'></memo-form>
 
     <div v-else>
 
@@ -55,6 +32,7 @@
 <script>
 import io from '../io'
 
+import MemoForm from './MemoForm'
 import CommentList from './CommentList'
 import CommentForm from './CommentForm'
 import MarkdownViewer from '../components/MarkdownViewer'
@@ -74,10 +52,10 @@ export default {
     }
   },
   components: {
+    MemoForm,
     CommentList,
     CommentForm,
     MarkdownViewer,
-    FileUploader,
   },
   route: {
     data({ to, next }){
@@ -146,29 +124,8 @@ export default {
         this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
       })
     },
-    uploaded(files){
-      // console.log(files)
-      files.forEach((file) => {
-        let text
-        if(isImage(file.type)){
-          text = `![${file.filename}](${file.url})`
-        }else{
-          text = `[${file.filename}](${file.url})`
-        }
-        if(this.editMemo.note){
-          this.editMemo.note += '\n'
-        }
-        this.editMemo.note += text
-      })
-    },
-  }
+  },
 }
-
-
-function isImage(type){
-  return type.split('/')[0] === 'image'
-}
-
 </script>
 
 <style>
