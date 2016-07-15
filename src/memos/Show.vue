@@ -2,13 +2,13 @@
 
   <div v-show='!$loadingRouteData'>
 
-    <h1>
-      #{{memo.id}} {{memo.title}}
-    </h1>
-
     <memo-form v-if='editing' :memo='editMemo' v-on:save='save' v-on:cancel='cancel'></memo-form>
 
     <div v-else>
+
+      <h1>
+        #{{memo.id}} {{memo.title}}
+      </h1>
 
       <div class='ui segment'>
         <markdown-viewer :text='memo.note'></markdown-viewer>
