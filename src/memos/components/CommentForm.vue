@@ -1,6 +1,6 @@
 <template>
 
-  <form class='ui form reply' v-on:submit.prevent='submit'>
+  <div class='ui form reply'>
     <div class='field'>
       <label>name</label>
       <input type='text' v-model='comment.user.name'>
@@ -9,10 +9,10 @@
       <label>comment</label>
       <textarea v-model='comment.body'></textarea>
     </div>
-    <button class='ui blue labeled submit icon button' type='submit'>
+    <button class='ui blue labeled submit icon button' type='button' v-on:click='submit'>
       <i class='icon edit'></i> Add Comment
     </button>
-  </form>
+  </div>
 
 </template>
 
@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     submit(){
+      this.$emit('submit')
     }
   }
 }
