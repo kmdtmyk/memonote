@@ -1,4 +1,5 @@
 <template>
+
   <h1>memo list</h1>
 
   <div class='ui menu'>
@@ -13,39 +14,24 @@
     </div>
   </div>
 
-  <table class='ui table celled'>
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>title</th>
-        <th>comments</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for='memo in memos'>
-        <td>
-          {{memo.id}}
-        </td>
-        <td>
-          <a v-link='{path: `/memos/${memo.id}`}'>{{memo.title}}</a>
-        </td>
-        <td>
-          {{memo.comments.length}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div v-show='!$loadingRouteData'>
+    <memo-list :memos='memos' ></memo-list>
+  </div>
 
 </template>
 
 <script>
 import io from '../io'
+import MemoList from './components/MemoList'
 
 export default {
   data() {
     return {
       memos: [],
     }
+  },
+  components: {
+    MemoList,
   },
   route: {
     data({ to, next }){
