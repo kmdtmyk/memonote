@@ -32,9 +32,9 @@
 <script>
 import io from '../io'
 
-import MemoForm from './MemoForm'
-import CommentList from './CommentList'
-import CommentForm from './CommentForm'
+import MemoForm from './components/MemoForm'
+import CommentList from './components/CommentList'
+import CommentForm from './components/CommentForm'
 import MarkdownViewer from '../components/MarkdownViewer'
 import FileUploader from '../components/FileUploader'
 

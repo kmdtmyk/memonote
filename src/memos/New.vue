@@ -8,7 +8,7 @@
 
 <script>
 import io from '../io'
-import MemoForm from './MemoForm'
+import MemoForm from './components/MemoForm'
 
 export default {
   data(){
