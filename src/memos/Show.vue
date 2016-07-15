@@ -79,7 +79,7 @@ export default {
     onSocket(msg){
       console.log(msg)
       let id = msg.id
-      if(id !== this.memo.id){
+      if(id != this.memo.id){
         return
       }
       io.socket.get(`/api/memo/${id}`, (memo) => {
@@ -88,6 +88,7 @@ export default {
     },
     edit(){
       this.editMemo = {
+        id: this.memo.id,
         title: this.memo.title,
         note: this.memo.note,
       }

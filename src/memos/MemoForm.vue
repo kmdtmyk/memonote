@@ -17,10 +17,14 @@
       <file-uploader v-on:uploaded='uploaded'></file-uploader>
     </div>
 
-    <div class='ui buttons'>
+    <div v-if='memo.id' class='ui buttons'>
       <button class='ui button positive' v-on:click='save'>Save</button>
       <div class='or'></div>
       <button class='ui button' v-on:click='cancel'>Cancel</button>
+    </div>
+
+    <div v-else>
+      <button class='ui button primary' v-on:click='save'>Save</button>
     </div>
 
   </div>

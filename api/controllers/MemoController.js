@@ -26,15 +26,6 @@ module.exports = {
         res.view({memo})
       })
   },
-  create(req, res){
-    var memo = req.body.memo
-    Memo.create(memo, (err, memo) => {
-      if(err){
-        return res.send(err, 500)
-      }
-      res.redirect(`/memo/${memo.id}`)
-    })
-  },
   update(req, res){
     var id = req.params.id
     var memo = req.body
