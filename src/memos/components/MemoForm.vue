@@ -9,7 +9,7 @@
 
     <div class='field'>
       <label>note</label>
-      <textarea v-model='memo.note'></textarea>
+      <markdown-editor :text.sync='memo.note'></markdown-editor>
     </div>
 
     <div class='field'>
@@ -33,6 +33,7 @@
 
 <script>
 import FileUploader from '../../components/FileUploader'
+import MarkdownEditor from '../../components/MarkdownEditor'
 
 export default {
   props: {
@@ -40,6 +41,7 @@ export default {
   },
   components: {
     FileUploader,
+    MarkdownEditor,
   },
   methods: {
     save(){

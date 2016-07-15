@@ -14,7 +14,9 @@ export default {
       if(!this.text){
         return ''
       }
-      return marked(this.text)
+      return marked(this.text, {
+        sanitize: true,
+      })
     },
   },
 }
