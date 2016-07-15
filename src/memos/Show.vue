@@ -1,50 +1,54 @@
 <template>
 
-  <h1>
-    #{{memo.id}} {{memo.title}}
-  </h1>
+  <div v-show='!$loadingRouteData'>
 
-  <div class='ui form' v-if='editing'>
+    <h1>
+      #{{memo.id}} {{memo.title}}
+    </h1>
 
-    <div class='field'>
-      <label>title</label>
-      <input type='text' v-model='editMemo.title'>
+    <div class='ui form' v-if='editing'>
+
+      <div class='field'>
+        <label>title</label>
+        <input type='text' v-model='editMemo.title'>
+      </div>
+
+      <div class='field'>
+        <label>note</label>
+        <textarea v-model='editMemo.note'></textarea>
+      </div>
+
+      <div class='field'>
+        <label>file upload</label>
+        <file-uploader v-on:uploaded='uploaded'></file-uploader>
+      </div>
+
+      <div class='ui buttons'>
+        <button class='ui button positive' v-on:click='save'>Save</button>
+        <div class='or'></div>
+        <button class='ui button' v-on:click='cancel'>Cancel</button>
+      </div>
+
     </div>
 
-    <div class='field'>
-      <label>note</label>
-      <textarea v-model='editMemo.note'></textarea>
+    <div v-else>
+
+      <div class='ui segment'>
+        <markdown-viewer :text='memo.note'></markdown-viewer>
+      </div>
+
+      <div>
+        <button class='ui button primary' v-on:click='edit'>edit</button>
+        <button class='ui button negative' v-on:click='delete'>delete</button>
+      </div>
+
     </div>
 
-    <div class='field'>
-      <label>file upload</label>
-      <file-uploader v-on:uploaded='uploaded'></file-uploader>
-    </div>
+    <comment-list :comments='memo.comments' v-on:delete='deleteComment'></comment-list>
 
-    <div class='ui buttons'>
-      <button class='ui button positive' v-on:click='save'>Save</button>
-      <div class='or'></div>
-      <button class='ui button' v-on:click='cancel'>Cancel</button>
-    </div>
+    <comment-form :comment='newComment' v-on:submit='addComment'></comment-form>
 
   </div>
-
-  <div v-else>
-
-    <div class='ui segment'>
-      <markdown-viewer :text='memo.note'></markdown-viewer>
-    </div>
-
-    <div>
-      <button class='ui button primary' v-on:click='edit'>edit</button>
-      <button class='ui button negative' v-on:click='delete'>delete</button>
-    </div>
-
-  </div>
-
-  <comment-list :comments='memo.comments' v-on:delete='deleteComment'></comment-list>
-
-  <comment-form :comment='newComment' v-on:submit='addComment'></comment-form>
 
 </template>
 
@@ -79,12 +83,31 @@ export default {
     data({ to, next }){
       let id = to.params.id
       io.socket.get(`/api/memo/${id}`, (memo) => {
-        // console.log(memo)
         next({memo})
       })
     },
+    activate(transition){
+      // console.log('activate', transition)
+      io.socket.on('memo', this.onSocket)
+      transition.next()
+    },
+    deactivate(transition){
+      // console.log('deactivate', transition)
+      io.socket.off('memo', this.onSocket)
+      transition.next()
+    },
   },
   methods: {
+    onSocket(msg){
+      console.log(msg)
+      let id = msg.id
+      if(id !== this.memo.id){
+        return
+      }
+      io.socket.get(`/api/memo/${id}`, (memo) => {
+        this.memo = memo
+      })
+    },
     edit(){
       this.editMemo = {
         title: this.memo.title,
@@ -140,20 +163,6 @@ export default {
     },
   }
 }
-
-// io.socket.on('memo', (res) => {
-//   console.log('on', res)
-//   fetch(vue, id)
-// })
-
-// fetch(vue, id)
-
-// function fetch(vue, id){
-//   io.socket.get('/api/memo/' + id , (memo) => {
-//     console.log('get', memo)
-//     vue.memo = memo
-//   })
-// }
 
 
 function isImage(type){
