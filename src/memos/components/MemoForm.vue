@@ -12,11 +12,6 @@
       <markdown-editor :text.sync='memo.note'></markdown-editor>
     </div>
 
-    <div class='field'>
-      <label>file upload</label>
-      <file-uploader v-on:uploaded='uploaded'></file-uploader>
-    </div>
-
     <div v-if='memo.id' class='ui buttons'>
       <button class='ui button positive' v-on:click='save'>Save</button>
       <div class='or'></div>
@@ -32,7 +27,6 @@
 </template>
 
 <script>
-import FileUploader from '../../components/FileUploader'
 import MarkdownEditor from '../../components/MarkdownEditor'
 
 export default {
@@ -40,7 +34,6 @@ export default {
     memo: Object,
   },
   components: {
-    FileUploader,
     MarkdownEditor,
   },
   methods: {
@@ -50,28 +43,8 @@ export default {
     cancel(){
       this.$emit('cancel')
     },
-    uploaded(files){
-      // console.log(files)
-      files.forEach((file) => {
-        let text = ''
-        if(isImage(file.type)){
-          text = `![${file.filename}](${file.url})`
-        }else{
-          text = `[${file.filename}](${file.url})`
-        }
-        if(this.memo.note){
-          this.memo.note += '\n'
-        }
-        this.memo.note += text
-      })
-    },
   },
 }
-
-function isImage(type){
-  return type.split('/')[0] === 'image'
-}
-
 </script>
 
 <style>
