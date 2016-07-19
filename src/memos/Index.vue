@@ -3,9 +3,9 @@
   <h1>memo list</h1>
 
   <div class='ui menu'>
-    <form class='item'>
+    <form class='item' v-on:submit.prevent='search'>
       <div class='ui icon input search'>
-        <input class='prompt' type='seach' placeholder='search' name='q'>
+        <input class='prompt' type='seach' placeholder='search' v-model='q'>
         <i class='search icon'></i>
       </div>
     </form>
@@ -14,9 +14,7 @@
     </div>
   </div>
 
-  <div v-show='!$loadingRouteData'>
-    <memo-list :memos='memos' ></memo-list>
-  </div>
+  <memo-list :memos='memos'></memo-list>
 
 </template>
 
@@ -28,6 +26,7 @@ export default {
   data() {
     return {
       memos: [],
+      q: this.$route.query.q || '',
     }
   },
   components: {
@@ -35,10 +34,14 @@ export default {
   },
   route: {
     data({ to, next }){
-      io.socket.get('/api/memo', (memos) => {
-        // console.log(memos)
+      io.socket.get(`/memo?q=${this.q}`, (memos) => {
         next({memos})
       })
+    },
+  },
+  methods: {
+    search(){
+      this.$router.go('?q=' + this.q)
     },
   },
 }

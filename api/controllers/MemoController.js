@@ -7,11 +7,28 @@
 
 module.exports = {
   index(req, res){
+    var q = req.query.q
     Memo
-      .find()
+      .find({
+        or: [
+          {
+            title: {
+              contains: q,
+            },
+          },
+          {
+            note: {
+              contains: q,
+            },
+          },
+        ],
+      })
       .populate('comments')
       .exec((err, memos) => {
-        res.view({memos})
+        if(err){
+          return res.send(err, 500)
+        }
+        res.json(memos)
       })
   },
   new(req, res){
