@@ -9,7 +9,15 @@ var bcrypt = require('bcrypt')
 
 module.exports = {
 
+  schema: true,
+
   attributes: {
+    name: {
+      type: 'string',
+    },
+    password: {
+      type: 'string',
+    },
     toJSON(){
       var user = this.toObject()
       delete user.password
@@ -29,6 +37,19 @@ module.exports = {
           cb(null, user)
         }
       })
+    })
+  },
+
+  comparePassword(password, user, cb){
+    bcrypt.compare(password, user.password, (err, match) => {
+      if(err){
+        cb(err)
+      }
+      if(match){
+        cb(null, true)
+      }else{
+        cb(err)
+      }
     })
   },
 

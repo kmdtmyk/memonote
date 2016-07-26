@@ -19,6 +19,11 @@
 
 module.exports.policies = {
 
+  // '*': ['isAuthorized'],
+  'MemoController': {
+    '*': ['isAuthorized'],
+  }
+
   /***************************************************************************
   *                                                                          *
   * Default policy for all controllers and actions (`true` allows public     *
