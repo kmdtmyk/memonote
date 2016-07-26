@@ -4,6 +4,9 @@
     <a class='item' v-link='{path: "/memos"}'>Memo</a>
     <a class='item' v-link='{path: "/labels"}'>Label</a>
     <a class='item' v-link='{path: "/users"}'>User</a>
+    <div class='right menu'>
+      <a class='item' v-link='{path: "/login"}'>Login</a>
+    </div>
   </div>
 </template>
 
