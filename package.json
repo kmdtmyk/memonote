@@ -28,6 +28,7 @@
     "rc": "1.0.1",
     "sails": "~0.12.3",
     "sails-disk": "~0.10.9",
+    "sails-hook-autoreload": "^0.13.2",
     "sails.io.js": "^0.13.8",
     "superagent": "^2.0.0"
   },
