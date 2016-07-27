@@ -11,10 +11,10 @@
 
     <div class='field'>
       <label>password</label>
-      <input type='text' v-model='user.password'>
+      <input type='password' v-model='user.password'>
     </div>
 
-    <div v-else>
+    <div>
       <button class='ui button primary' v-on:click='login'>Login</button>
     </div>
 

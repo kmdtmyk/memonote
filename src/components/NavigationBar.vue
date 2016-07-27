@@ -6,6 +6,7 @@
     <a class='item' v-link='{path: "/users"}'>User</a>
     <div class='right menu'>
       <a class='item' v-link='{path: "/login"}'>Login</a>
+      <a class='item' v-link='{path: "/signup"}'>Signup</a>
     </div>
   </div>
 </template>
