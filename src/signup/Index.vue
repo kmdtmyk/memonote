@@ -1,6 +1,6 @@
 <template>
 
-  <h1>Sginup</h1>
+  <h1>Signup</h1>
 
   <div class='ui form'>
 
@@ -50,11 +50,7 @@ export default {
   },
   methods: {
     signup(){
-      // console.log('signup')
-
       Auth.signup(this.user, (err, res) => {
-        // console.log(err)
-        // console.log(res)
         if(err){
           this.errorMessages.unshift({title:'error',message: res.body.summary})
           return

@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "base64-coder-node": "^1.0.7",
     "bcrypt": "^0.8.7",
     "ejs": "2.3.4",
     "grunt": "0.4.5",

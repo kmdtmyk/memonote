@@ -21,7 +21,11 @@ module.exports = {
       if(err){
         return res.json(err.status, err)
       }
-      res.json(200, {user, token: jwToken.sign({user})})
+      let token = jwToken.sign({
+        id: user.id,
+        name: user.name,
+      })
+      res.json(200, {user, token})
     })
 
   },
