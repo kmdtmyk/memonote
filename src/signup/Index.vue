@@ -32,11 +32,16 @@
 
 <script>
 import ErrorMessage from '../components/ErrorMessage'
+import Auth from '../auth'
 
 export default {
   data(){
     return {
-      user: {},
+      user: {
+        name: '',
+        password: '',
+        confirmPassword: '',
+      },
       errorMessages: [],
     }
   },
@@ -46,7 +51,16 @@ export default {
   methods: {
     signup(){
       // console.log('signup')
-      this.errorMessages.push({title:'title',message:'message'})
+
+      Auth.signup(this.user, (err, res) => {
+        // console.log(err)
+        // console.log(res)
+        if(err){
+          this.errorMessages.unshift({title:'error',message: res.body.summary})
+          return
+        }
+        this.$router.go('/memos')
+      })
     },
   },
 }

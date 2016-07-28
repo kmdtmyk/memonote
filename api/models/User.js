@@ -14,9 +14,12 @@ module.exports = {
   attributes: {
     name: {
       type: 'string',
+      required: true,
+      unique: true,
     },
     password: {
       type: 'string',
+      required: true,
     },
     toJSON(){
       var user = this.toObject()
