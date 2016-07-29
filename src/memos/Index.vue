@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import io from '../io'
 import MemoList from './components/MemoList'
+import socket from '../socket'
 
 export default {
   data() {
@@ -34,7 +34,7 @@ export default {
   },
   route: {
     data({ to, next }){
-      io.socket.get(`/memo?q=${this.q}`, (memos) => {
+      socket.get(`/memo?q=${this.q}`, (memos) => {
         next({memos})
       })
     },

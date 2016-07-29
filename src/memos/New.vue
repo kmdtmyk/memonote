@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import io from '../io'
+import socket from '../socket'
 import MemoForm from './components/MemoForm'
 
 export default {
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     save(){
-      io.socket.post('/api/memo', this.memo, (memo) => {
+      socket.post('/api/memo', this.memo, (memo) => {
         console.log(memo)
         this.$router.go(`/memos/${memo.id}`)
       })

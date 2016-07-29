@@ -16,23 +16,23 @@ const app = Vue.extend(App)
 router.start(app, '#app')
 
 
-import io from './io'
+// import io from './io'
 import Push from 'push.js'
 
 
-io.socket.on('memo', (msg) => {
+// io.socket.on('memo', (msg) => {
+//
+//   Push.create('title', {
+//     tag: 'tag',
+//     onClick(){
+//       window.focus()
+//       this.close()
+//     },
+//   })
+//
+// })
 
-  Push.create('title', {
-    tag: 'tag',
-    onClick(){
-      window.focus()
-      this.close()
-    },
-  })
 
-})
-
-
-io.socket.get('/api/memo', (memos) => {
+// io.socket.get('/api/memo', (memos) => {
   // console.log(memos)
-})
+// })
