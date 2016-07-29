@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import io from '../io'
+import socket from '../socket'
 
 import MemoForm from './components/MemoForm'
 import CommentList from './components/CommentList'
@@ -60,18 +60,18 @@ export default {
   route: {
     data({ to, next }){
       let id = to.params.id
-      io.socket.get(`/api/memo/${id}`, (memo) => {
+      socket.get(`/api/memo/${id}`, (memo) => {
         next({memo})
       })
     },
     activate(transition){
       // console.log('activate', transition)
-      io.socket.on('memo', this.onSocket)
+      socket.on('memo', this.onSocket)
       transition.next()
     },
     deactivate(transition){
       // console.log('deactivate', transition)
-      io.socket.off('memo', this.onSocket)
+      socket.off('memo', this.onSocket)
       transition.next()
     },
   },
@@ -82,7 +82,7 @@ export default {
       if(id != this.memo.id){
         return
       }
-      io.socket.get(`/api/memo/${id}`, (memo) => {
+      socket.get(`/api/memo/${id}`, (memo) => {
         this.memo = memo
       })
     },
@@ -101,7 +101,7 @@ export default {
       if(!this.editing){
         return
       }
-      io.socket.put('/api/memo/' + this.memo.id, this.editMemo, (memo) => {
+      socket.put('/api/memo/' + this.memo.id, this.editMemo, (memo) => {
         Object.assign(this.memo, this.editMemo)
         this.editing = false
       })
@@ -111,7 +111,7 @@ export default {
     },
     addComment(e){
       this.newComment.memo = this.memo.id
-      io.socket.post('/api/memoComment', this.newComment, (res) => {
+      socket.post('/api/memoComment', this.newComment, (res) => {
         this.memo.comments.push(res)
       })
       this.newComment = {
@@ -120,7 +120,7 @@ export default {
     },
     deleteComment(comment){
       let id = comment.id
-      io.socket.delete('/api/memoComment/' + id, (res) => {
+      socket.delete('/api/memoComment/' + id, (res) => {
         console.log('delete', res)
         this.memo.comments = this.memo.comments.filter((comment) => comment.id !== id)
       })
