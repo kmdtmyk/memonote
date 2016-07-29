@@ -14,6 +14,8 @@
       <input type='password' v-model='user.password'>
     </div>
 
+    <error-message v-for='errorMessage in errorMessages' :title='errorMessage.title' :message='errorMessage.message'></error-message>
+
     <div>
       <button class='ui button primary' v-on:click='login'>Login</button>
     </div>
@@ -23,15 +25,28 @@
 </template>
 
 <script>
+import ErrorMessage from '../components/ErrorMessage'
+import Auth from '../auth'
+
 export default {
   data(){
     return {
       user: {},
+      errorMessages: [],
     }
+  },
+  components: {
+    ErrorMessage
   },
   methods: {
     login(){
-      console.log('login')
+      Auth.login(this.user, (err, res) => {
+        if(err){
+          this.errorMessages.unshift({title:'error', message: res.body.message})
+          return
+        }
+        this.$router.go('/memos')
+      })
     },
   },
 }

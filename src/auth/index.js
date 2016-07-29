@@ -22,7 +22,17 @@ let Auth = {
   },
 
   login(user, callback){
-
+    Request
+      .post('user/login')
+      .send(user)
+      .end((err, res) => {
+        if(!err){
+          var token = res.body.token
+          Store.set('token', token)
+          this.setCurrentUser()
+        }
+        callback(err, res)
+      })
   },
 
   logout(callback){
@@ -42,7 +52,7 @@ let Auth = {
       this.currentUser.name = ''
       return
     }
-    let user = JSON.parse(base64().decode(token.split('.')[1])).user
+    let user = JSON.parse(base64().decode(token.split('.')[1]))
     Object.assign(this.currentUser, user)
   },
 
