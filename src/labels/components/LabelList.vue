@@ -11,7 +11,7 @@
     <tbody>
       <tr v-for='label in labels'>
         <td>
-          <tag :color='label.style.backgroundColor'>{{label.name}}</tag>
+          <tag :color='label.color'>{{label.name}}</tag>
         </td>
         <td class='right aligned'>
           <button class='ui button primary'>edit</button>

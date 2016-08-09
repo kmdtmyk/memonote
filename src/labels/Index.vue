@@ -3,21 +3,23 @@
   <h1>label list</h1>
 
   <div class='ui form'>
+
     <div class='inline fields'>
+
       <div class='field'>
         <label>name</label>
         <input type='text' v-model='newLabel.name'>
       </div>
+
       <div class='field'>
-        <label>font color</label>
-        <input type='text' v-model='newLabel.style.color'>
+        <label>color</label>
+        <input type='text' v-model='newLabel.color'>
       </div>
-      <div class='field'>
-        <label>background color</label>
-        <input type='text' v-model='newLabel.style.backgroundColor'>
-      </div>
+
       <button class='ui button primary' v-on:click='add'>Add label</button>
+
     </div>
+    
   </div>
 
   <label-list :labels.sync='labels'></label-list>
@@ -32,9 +34,7 @@ export default {
   data() {
     return {
       labels: [],
-      newLabel: {
-        style: {},
-      },
+      newLabel: {},
     }
   },
   components: {
@@ -51,9 +51,7 @@ export default {
     add(){
       socket.post('/api/label', this.newLabel, (label) => {
         this.labels.push(label)
-        this.newLabel = {
-          style: {},
-        }
+        this.newLabel = {}
       })
     }
   },
