@@ -13,13 +13,13 @@
 
       <div class='field'>
         <label>color</label>
-        <input type='text' v-model='newLabel.color'>
+        <input type='color' v-model='newLabel.color' style='width: 4em;'>
       </div>
 
       <button class='ui button primary' v-on:click='add'>Add label</button>
 
     </div>
-    
+
   </div>
 
   <label-list :labels.sync='labels'></label-list>
