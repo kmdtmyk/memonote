@@ -11,7 +11,7 @@
     <tbody>
       <tr v-for='label in labels'>
         <td>
-          <span class='ui tag label' :style='label.style'>{{label.name}}</span>
+          <tag :color='label.style.backgroundColor'>{{label.name}}</tag>
         </td>
         <td class='right aligned'>
           <button class='ui button primary'>edit</button>
@@ -24,17 +24,21 @@
 </template>
 
 <script>
+import Tag from '../../components/Tag'
 import socket from '../../socket'
 
 export default {
   props: {
     labels: Array
   },
+  components: {
+    Tag,
+  },
   methods: {
     del(label){
       socket.delete(`/api/label/${label.id}`, label => {
         // console.log('delete', label)
-        this.labels = this.labels.filter(l => return l.id !== label.id)
+        this.labels = this.labels.filter(l => l.id !== label.id)
       })
     },
   },
