@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <label-list :labels='labels'></label-list>
+  <label-list :labels.sync='labels'></label-list>
 
 </template>
 

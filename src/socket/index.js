@@ -31,6 +31,13 @@ export default class{
     io.socket.put(...args)
   }
 
+  static delete(...args){
+    io.sails.headers = {
+      'Authorization': 'Bearer ' + Auth.getToken()
+    }
+    io.socket.delete(...args)
+  }
+
   static on(...args){
     io.sails.headers = {
       'Authorization': 'Bearer ' + Auth.getToken()
