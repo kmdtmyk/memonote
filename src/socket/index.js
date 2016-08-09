@@ -17,6 +17,13 @@ export default class{
     io.socket.get(...args)
   }
 
+  static post(...args){
+    io.sails.headers = {
+      'Authorization': 'Bearer ' + Auth.getToken()
+    }
+    io.socket.post(...args)
+  }
+
   static put(...args){
     io.sails.headers = {
       'Authorization': 'Bearer ' + Auth.getToken()

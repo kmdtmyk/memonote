@@ -1,6 +1,7 @@
 import signup from './signup/routes'
 import login from './login/routes'
 import memos from './memos/routes'
+import labels from './labels/routes'
 
 export default {
   '/': {
@@ -11,4 +12,5 @@ export default {
   '/signup': signup,
   '/login': login,
   '/memos': memos,
+  '/labels': labels,
 }
