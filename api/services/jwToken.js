@@ -4,7 +4,7 @@ const tokenSecret = 'secret'
 
 module.exports.sign = function(payload){
   var options = {
-    expiresIn: '180m',
+    expiresIn: '1800m',
   }
   return jwt.sign(payload, tokenSecret, options)
 }
