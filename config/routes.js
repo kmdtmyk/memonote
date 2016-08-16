@@ -32,9 +32,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
+  // '/': {
+  //   view: 'homepage'
+  // },
   'post /user/login': 'UserController.login',
 
   'get /memo/new': 'MemoController.new',

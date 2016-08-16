@@ -39,7 +39,7 @@
     "debug": "node debug app.js",
     "start": "node app.js",
     "server": "node app.js",
-    "client": "webpack-dev-server"
+    "webpack": "webpack --watch"
   },
   "main": "app.js",
   "repository": {

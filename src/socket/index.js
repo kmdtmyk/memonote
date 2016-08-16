@@ -5,7 +5,7 @@ import config from '../config'
 import Auth from '../auth'
 
 let io = sailsIOClient(socketIOClient)
-io.sails.url = config.apiServer
+// io.sails.url = config.apiServer
 
 
 export default class{
